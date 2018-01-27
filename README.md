@@ -7,8 +7,7 @@ Work in progress Godot v3 binary format decoder for Erlang
 GDScript:  
 
 ```
-func login(username, password):
-	print("login:", username, " password: ", password)
+func send_random_data(username, password):
 	connect_to_server("localhost", 4242)
 	client.put_var({'id': 12, 'value':'cheese', 'wibble':1.22222})
 ```

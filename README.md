@@ -30,3 +30,12 @@ Build
 -----
 
     $ rebar3 compile
+
+
+Test
+-----
+
+    $ export GODOT_BINARY=/home/me/bin/Godot_v3.0  
+    $ ./generate_test_data.sh  
+    $ rebar3 ct  
+    

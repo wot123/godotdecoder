@@ -32,10 +32,10 @@
 -define(RID, 16:?U_INT).
 -define(OBJECT, 17:?U_INT).
 -define(DICTIONARY, 18:?U_INT).
+-define(ARRAY, 19:?U_INT).
 
 
 %% invalid beyond this point
--define(ARRAY, 21:?U_INT).
 -define(BYTEARRAY, 22:?U_INT).
 -define(INTARRAY, 23:?U_INT).
 -define(FLOATARRAY, 24:?U_INT).
@@ -126,6 +126,11 @@ decode_element(<<?DICTIONARY, Elements:?U_INT, Bin/binary>>) ->
     {Dict, B} = decode_dictionary(Bin, Elements, []),
     {{dictionary, Dict}, B};
 
+decode_element(<<?ARRAY, Elements:?U_INT, Bin/binary>>) ->
+    {Array, B} = decode_array(Bin, Elements, []),
+    {{array, Array}, B};
+
+
 decode_element(E) ->
     io:format("E: ~p", [E]),
     {none, <<>>}.
@@ -149,9 +154,17 @@ decode_dictionary(Bin, 0, Dict) ->
     {Dict, Bin};
 
 decode_dictionary(Bin, Elements, Dict) ->
-    {Key, B} = decode_element(Bin),
-    {Value, B2} = decode_element(B),
-    decode_dictionary(B2, Elements-1, Dict ++ [{Key, Value}]).
+    {Key, Bin2} = decode_element(Bin),
+    {Value, Bin3} = decode_element(Bin2),
+    decode_dictionary(Bin3, Elements-1, Dict ++ [{Key, Value}]).
+
+decode_array(Bin, 0, Array) ->
+    {Array, Bin};
+
+decode_array(Bin, Elements, Array) ->
+    {Value, Bin2} = decode_element(Bin),
+    decode_array(Bin2, Elements-1, Array ++ [Value]).
+
 
 decode_padded_string(Length, 4, Bin) ->
     <<String:Length/binary-unit:8, D/binary>> = Bin,

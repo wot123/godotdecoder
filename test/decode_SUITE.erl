@@ -12,8 +12,8 @@
          test_negative_large_float/1,
          test_int_dict/1,
          test_float_dict/1,
-         test_mixed_dict/1]).
-
+         test_mixed_dict/1,
+         test_int_list/1]).
 
 all() ->
     [test_positive_integer,
@@ -25,7 +25,8 @@ all() ->
      test_negative_large_float,
      test_int_dict,
      test_float_dict,
-     test_mixed_dict].
+     test_mixed_dict,
+     test_int_list].
 
 test_positive_integer(_) ->
     {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/positive_int.bin"),
@@ -70,3 +71,7 @@ test_mixed_dict(_) ->
     {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/mixed_dict.bin"),
     [ {dictionary, [ {1,"test string"}, {0.0001, 12}, {"test string", -999999999}, {-1, -1.0001}]}] =
         decoder:decode(Bin).
+
+test_int_list(_) ->
+    {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/int_list.bin"),
+    [1, 2, 3, 4, 9999999999, -1, -2, -3, -4, -9999999999] = decoder:decode(Bin).

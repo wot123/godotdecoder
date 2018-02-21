@@ -14,7 +14,9 @@
          test_float_dict/1,
          test_mixed_dict/1,
          test_int_list/1,
-         test_float_list/1]).
+         test_float_list/1,
+         test_int_dict_list/1,
+         test_float_dict_list/1]).
 
 all() ->
     [test_positive_integer,
@@ -28,7 +30,9 @@ all() ->
      test_float_dict,
      test_mixed_dict,
      test_int_list,
-     test_float_list].
+     test_float_list,
+     test_int_dict_list,
+     test_float_dict_list].
 
 test_positive_integer(_) ->
     {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/positive_int.bin"),
@@ -81,3 +85,11 @@ test_int_list(_) ->
 test_float_list(_) ->
     {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/float_list.bin"),
     [{array, [1.0, 2.01, 3.01, 4.444444, 9999999999.9999999999, -1.0, -2.01, -3.01, -4.444444, -9999999999.9999999999]}] = decoder:decode(Bin).
+
+test_int_dict_list(_) ->
+    {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/int_dict_list.bin"),
+    [{array, [{dictionary, [{1,2}]}, {dictionary, [{3,4},{9999999999,-1}]}, {dictionary,[{-2,-3},{-4, -9999999999}]}]}] = decoder:decode(Bin).
+
+test_float_dict_list(_) ->
+    {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/float_dict_list.bin"),
+    [{array, [{dictionary, [{1.01, 2.2}]}, {dictionary,[{3.3, 4.4},{9999999999.99999999, -1.1}]}, {dictionary, [{-2.2, -3.3},{-4.4,-9999999999.999999999}]}]}] = decoder:decode(Bin).

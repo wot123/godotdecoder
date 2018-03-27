@@ -1,7 +1,6 @@
 godotdecoder
 =====
 
-[![pipeline status](https://gitlab.com/Wot123/godotdecoder/badges/master/pipeline.svg)](https://gitlab.com/Wot123/godotdecoder/commits/master)
 
 Work in progress Godot v3 binary format decoder for Erlang
   

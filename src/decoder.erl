@@ -123,19 +123,14 @@ decode_element(<<?OBJECT, D/binary>>) ->
     {unsupported, D};
 
 decode_element(<<?DICTIONARY, Elements:?U_INT, Bin/binary>>) ->
-    {Dict, B} = decode_dictionary(Bin, Elements, []),
-    {{dictionary, Dict}, B};
+    decode_dictionary(Bin, Elements, []);
 
 decode_element(<<?ARRAY, Elements:?U_INT, Bin/binary>>) ->
-    {Array, B} = decode_array(Bin, Elements, []),
-    {{array, Array}, B};
-
+    decode_array(Bin, Elements, []);
 
 decode_element(E) ->
     io:format("E: ~p", [E]),
     {none, <<>>}.
-
-
 
 decode(<<L:?U_INT, Bin/binary>>) when byte_size(Bin) == L ->
     decode_elements(Bin);
@@ -151,7 +146,8 @@ decode_elements(Bin) ->
 
 
 decode_dictionary(Bin, 0, Dict) ->
-    {Dict, Bin};
+    Map = maps:from_list(Dict),
+    {Map, Bin};
 
 decode_dictionary(Bin, Elements, Dict) ->
     {Key, Bin2} = decode_element(Bin),

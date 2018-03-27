@@ -1,5 +1,6 @@
 godotdecoder
 =====
+[![CircleCI](https://circleci.com/gh/wot123/godotdecoder.svg?style=svg)](https://circleci.com/gh/wot123/godotdecoder)
 
 
 Work in progress Godot v3 binary format decoder for Erlang

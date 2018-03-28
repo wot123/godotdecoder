@@ -1,28 +1,37 @@
 -module(encoder).
 
 -export([encode/1]).
+-compile(export_all).
 -include("include/godot.hrl").
 
 
-encode_element([{int, I}|T])->
-    {<<?INTEGER64, I:8/little-signed-integer-unit:8>>,T};
 
-encode_element([{float, F}|T]) ->
-    {<<?FLOAT64, F:64/little-float>>,T};
+encode_element({int, I})->
+    <<?INTEGER64, I:8/little-signed-integer-unit:8>>;
 
-encode_element([{string, S}|T]) ->
+encode_element({float, F}) ->
+    <<?FLOAT64, F:64/little-float>>;
+
+encode_element({string, S}) when is_binary(S) ->
     Size = byte_size(S),
-    Padding = Size + (4 - (Size rem 4)),
-    {<<?STRING, Padding:32/little-integer,S/binary>>, T}.
+    Pad = Size rem 4,
+    % Pad string to 4 bytes
+    <<?STRING, Size:32/little-integer, S/binary, 0:((4-Pad)*8)>>;
 
+encode_element({map, M}) ->
+    ML = maps:to_list(M),
+    Elements = lists:map( fun({K,V}) -> [encode_element(K), encode_element(V)] end, ML),
+    Length = length(Elements),
+    Bin = list_to_binary(Elements),
+   <<?DICTIONARY, Length:?U_INT, Bin/binary>>.
 
 encode_elements([]) ->
     [];
 
-encode_elements(Data) ->
-    {Element, R} = encode_element(Data),
-    [Element] ++ encode_elements(R).
+encode_elements([H|T]) ->
+    [encode_element(H)] ++ encode_elements(T).
 
 encode(Data) ->
-    list_to_binary(encode_elements(Data)).
-
+    EncodedData = list_to_binary(encode_elements(Data)),
+    Size = byte_size(EncodedData),
+    <<Size:?U_INT, EncodedData/binary>>.

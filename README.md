@@ -29,7 +29,7 @@ Eshell V9.2  (abort with ^G)
 
 ```
 Erlang/OTP 20 [erts-9.2] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:0] [hipe] [kernel-poll:false]  
-1> encoder:encode([ {map, #{ {string, <<"key">>} => {int, 1}, {int, 1} => {float, 0.01}}}]).
+1> encoder:encode([ #{ <<"key">> => 1, 1 => 0.01}]).
 <<56,0,0,0,18,0,0,0,2,0,0,0,2,0,1,0,1,0,0,0,0,0,0,0,3,0,1,
   0,123,...>>
 2> 

@@ -1,9 +1,7 @@
 -module(encoder).
 
 -export([encode/1]).
--compile(export_all).
 -include("include/godot.hrl").
-
 
 
 encode_element({int, I})->
@@ -23,7 +21,14 @@ encode_element({map, M}) ->
     Elements = lists:map( fun({K,V}) -> [encode_element(K), encode_element(V)] end, ML),
     Length = length(Elements),
     Bin = list_to_binary(Elements),
-   <<?DICTIONARY, Length:?U_INT, Bin/binary>>.
+   <<?DICTIONARY, Length:?U_INT, Bin/binary>>;
+
+encode_element({list, L}) ->
+    Elements= lists:map( fun(E) -> [encode_element(E)] end, L),
+    Length = length(Elements),
+    Bin = list_to_binary(Elements),
+    <<?ARRAY, Length:?U_INT, Bin/binary>>.
+
 
 encode_elements([]) ->
     [];

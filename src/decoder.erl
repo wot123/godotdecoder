@@ -8,12 +8,12 @@
 %% API functions
 %%====================================================================
 
-decode_element(<<?NULL, 0:32, D/binary>>) ->
+decode_element(<<?NULL, D/binary>>) ->
     {null , D};
 
-decode_element(<<?BOOL, 0:32, D/binary>>) ->
+decode_element(<<?BOOL, 0:?U_INT, D/binary>>) ->
     {false, D};
-decode_element(<<?BOOL, 1:32, D/binary>>) ->
+decode_element(<<?BOOL, 1:?U_INT, D/binary>>) ->
     {true, D};
 
 decode_element(<<?INTEGER, I:4/little-signed-integer-unit:8, D/binary>>) ->

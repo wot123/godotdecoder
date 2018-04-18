@@ -14,7 +14,7 @@ encode_element(S) when is_binary(S) ->
     Size = byte_size(S),
     Pad = Size rem 4,
     % Pad string to 4 bytes
-    <<?STRING, Size:32/little-integer, S/binary, 0:((4-Pad)*8)>>;
+    encode_padded_string(S,Size,Pad);
 
 encode_element(M) when is_map(M) ->
     ML = maps:to_list(M),
@@ -40,3 +40,13 @@ encode(Data) ->
     EncodedData = list_to_binary(encode_elements(Data)),
     Size = byte_size(EncodedData),
     <<Size:?U_INT, EncodedData/binary>>.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+encode_padded_string(String, Size, 0) ->
+    <<?STRING, Size:32/little-integer, String/binary>>;
+
+encode_padded_string(String, Size, Pad) ->
+    <<?STRING, Size:32/little-integer, String/binary, 0:((4-Pad)*8)>>.

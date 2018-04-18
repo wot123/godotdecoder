@@ -34,14 +34,14 @@ decode_element(<<?STRING, L:32/little-integer, S/binary>>) ->
     {String, D} = decode_padded_string(L, Padding, S),
     {binary_to_list(String), D};
 
-decode_element(<<?VECTOR2, X:32/float, Y:32/float, D/binary>>) ->
-    {{X, Y}, D};
+decode_element(<<?VECTOR2, X:32/little-float, Y:32/little-float, D/binary>>) ->
+    {{vector2, X, Y}, D};
 
-decode_element(<<?RECT2, X:32/float, Y:32/float, XS:32/float, YS:32/float, D/binary>>) ->
-    {{X, Y, XS, YS}, D};
+decode_element(<<?RECT2, X:32/little-float, Y:32/little-float, XS:32/little-float, YS:32/little-float, D/binary>>) ->
+    {{rect2, X, Y, XS, YS}, D};
 
-decode_element(<<?VECTOR3, X:32/float, Y:32/float, Z:32/float, D/binary>>) ->
-    {{X, Y, Z}, D};
+decode_element(<<?VECTOR3, X:32/little-float, Y:32/little-float, Z:32/little-float, D/binary>>) ->
+    {{vector3, X, Y, Z}, D};
 
 decode_element(<<?MATRIX32, ZEROZERO:32/float, ZEROONE:32/float, 
                     ONEZERO:32/float, ONEONE:32/float, 

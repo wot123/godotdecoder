@@ -21,7 +21,10 @@
          test_null/1,
          test_mixed_dict_null_bool/1,
          test_null_dict/1,
-         test_string_null_dict/1]).
+         test_string_null_dict/1,
+         test_vector2/1,
+         test_vector3/1,
+         test_rect2/1]).
 
 all() ->
     [test_positive_integer,
@@ -42,7 +45,10 @@ all() ->
      test_null,
      test_mixed_dict_null_bool,
      test_null_dict,
-     test_string_null_dict].
+     test_string_null_dict,
+     test_vector2,
+     test_vector3,
+     test_rect2].
 
 
 test_positive_integer(_) ->
@@ -126,3 +132,15 @@ test_null_dict(_) ->
 test_string_null_dict(_) ->
     {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/string_null_dict.bin"),
     [ #{ "key1" := null }] = decoder:decode(Bin).
+
+test_vector2(_) ->
+    {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/vector2.bin"),
+    [{vector2, 0.0, 1.0}] = decoder:decode(Bin).
+
+test_vector3(_) ->
+    {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/vector3.bin"),
+    [{vector3, 0.0, 1.0, 2.0}] = decoder:decode(Bin).
+
+test_rect2(_) ->
+    {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/rect2.bin"),
+    [{rect2, 0.0, 1.0, 2.0, 3.0}] = decoder:decode(Bin).

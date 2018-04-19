@@ -24,7 +24,8 @@
          test_string_null_dict/1,
          test_vector2/1,
          test_vector3/1,
-         test_rect2/1]).
+         test_rect2/1,
+         test_mixed_dict_vector/1]).
 
 all() ->
     [test_positive_integer,
@@ -48,7 +49,8 @@ all() ->
      test_string_null_dict,
      test_vector2,
      test_vector3,
-     test_rect2].
+     test_rect2,
+     test_mixed_dict_vector].
 
 
 test_positive_integer(_) ->
@@ -144,3 +146,7 @@ test_vector3(_) ->
 test_rect2(_) ->
     {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/rect2.bin"),
     [{rect2, 0.0, 1.0, 2.0, 3.0}] = decoder:decode(Bin).
+
+test_mixed_dict_vector(_) ->
+    {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/mixed_dict_vector.bin"),
+    [#{ 1 := {vector2, 0.0, 3.0}, 0.0001 := {vector3, 0.0, 1.0, 2.0}, "test string" := {rect2, 0.0, 0.0, 1.0, 1.0}}] = decoder:decode(Bin).

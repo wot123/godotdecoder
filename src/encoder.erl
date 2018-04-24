@@ -36,7 +36,30 @@ encode_element(#gd_vector3{x=X, y=Y, z=Z}) ->
     <<?VECTOR3, X:32/little-float, Y:32/little-float, Z:32/little-float>>;
 
 encode_element(#gd_rect2{x1 = X, y1 = Y, x2 = X2, y2 = Y2}) ->
-    <<?RECT2, X:32/little-float, Y:32/little-float, X2:32/little-float, Y2:32/little-float>>.
+    <<?RECT2, X:32/little-float, Y:32/little-float, X2:32/little-float, Y2:32/little-float>>;
+
+encode_element(#gd_color{r = R, g = G, b = B, a = A}) ->
+    <<?COLOR, R:32/little-float, G:32/little-float, B:32/little-float, A:32/little-float>>;
+
+encode_element(#gd_aabb{position = #gd_vector3{x=PX, y=PY, z=PZ},
+                        size = #gd_vector3{x=SX, y = SY, z = SZ}}) ->
+    <<?AABB, PX:32/little-float, PY:32/little-float, PZ:32/little-float,
+             SX:32/little-float, SY:32/little-float, SZ:32/little-float>>;
+
+encode_element(#gd_plane{x = X, y = Y, z = Z, d = Distance}) ->
+    <<?PLANE, X:32/little-float, Y:32/little-float, Z:32/little-float, Distance:32/little-float>>;
+
+encode_element(#gd_quat{ x = X, y = Y, z = Z, w = W}) ->
+    <<?QUAT, X:32/little-float, Y:32/little-float, Z:32/little-float, W:32/little-float>>;
+
+
+encode_element(#gd_basis{ x_axis = #gd_vector3{x = X1, y = Y1, z = Z1},
+                          y_axis = #gd_vector3{x = X2, y = Y2, z = Z2},
+                          z_axis = #gd_vector3{x = X3, y = Y3, z= Z3}}) ->
+    <<?BASIS, X1:32/little-float, X2:32/little-float, X3:32/little-float,
+              Y1:32/little-float, Y2:32/little-float, Y3:32/little-float,
+              Z1:32/little-float, Z2:32/little-float, Z3:32/little-float>>.
+
 
 encode_elements([]) ->
     [];

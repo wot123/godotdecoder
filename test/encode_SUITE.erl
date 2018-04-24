@@ -20,7 +20,12 @@
          test_float_dict_list/1,
          test_vector2/1,
          test_vector3/1,
-         test_rect2/1]).
+         test_rect2/1,
+         test_color/1,
+         test_aabb/1,
+         test_plane/1,
+         test_quat/1,
+         test_basis/1]).
 
 all() ->
     [test_positive_integer,
@@ -39,7 +44,12 @@ all() ->
      test_float_dict_list,
      test_vector2,
      test_vector3,
-     test_rect2].
+     test_rect2,
+     test_color,
+     test_aabb,
+     test_plane,
+     test_quat,
+     test_basis].
 
 test_positive_integer(_) ->
     {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/positive_int.bin"),
@@ -153,3 +163,26 @@ test_vector3(_) ->
 test_rect2(_) ->
     {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/rect2.bin"),
     Bin = encoder:encode([#gd_rect2{x1 = 0.0, y1 = 1.0, x2 = 2.0, y2 = 3.0}]).
+
+test_color(_) ->
+    {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/color.bin"),
+    Bin = encoder:encode([#gd_color{r = 0.0, g = 1.0, b = 0.0, a = 1.0}]).
+
+test_aabb(_) ->
+    {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/aabb.bin"),
+    Bin = encoder:encode([#gd_aabb{ position = #gd_vector3{x=0.0, y=1.0, z=2.0},
+                                    size = #gd_vector3{x=1.0, y=2.0, z=3.0}}]).
+
+test_plane(_) ->
+    {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/plane.bin"),
+    Bin = encoder:encode([#gd_plane{ x = 0.0, y = 1.0, z = 2.0, d = 3.0}]).
+
+test_quat(_) ->
+    {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/quat.bin"),
+    Bin = encoder:encode([#gd_quat{ x = 0.0, y = 1.0, z = 2.0, w = 3.0}]).
+
+test_basis(_) -> 
+    {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/basis.bin"),
+    Bin = encoder:encode([#gd_basis{x_axis = #gd_vector3{x = 1.0, y = 2.0, z = 3.0},
+                                    y_axis = #gd_vector3{x = 4.0, y = 5.0, z = 6.0},
+                                    z_axis = #gd_vector3{x = 7.0, y = 8.0, z = 9.0}}]).

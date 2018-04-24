@@ -1,6 +1,7 @@
 -module(encode_SUITE).
 
 -include_lib("common_test/include/ct.hrl").
+-include("include/godot.hrl").
 
 -export([all/0]).
 -export([test_positive_integer/1,
@@ -16,7 +17,10 @@
          test_int_list/1,
          test_float_list/1,
          test_int_dict_list/1,
-         test_float_dict_list/1]).
+         test_float_dict_list/1,
+         test_vector2/1,
+         test_vector3/1,
+         test_rect2/1]).
 
 all() ->
     [test_positive_integer,
@@ -32,7 +36,10 @@ all() ->
      test_int_list,
      test_float_list,
      test_int_dict_list,
-     test_float_dict_list].
+     test_float_dict_list,
+     test_vector2,
+     test_vector3,
+     test_rect2].
 
 test_positive_integer(_) ->
     {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/positive_int.bin"),
@@ -134,3 +141,15 @@ test_float_dict_list(_) ->
     [Bin2] = decoder:decode(Encoded),
 
     lists:sort(Bin1) == lists:sort(Bin2).
+
+test_vector2(_) ->
+    {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/vector2.bin"),
+    Bin = encoder:encode([#gd_vector2{ x = 0.0, y = 1.0}]).
+   
+test_vector3(_) ->
+    {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/vector3.bin"),
+    Bin = encoder:encode([#gd_vector3{ x = 0.0, y = 1.0, z = 2.0}]).
+
+test_rect2(_) ->
+    {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/rect2.bin"),
+    Bin = encoder:encode([#gd_rect2{x1 = 0.0, y1 = 1.0, x2 = 2.0, y2 = 3.0}]).

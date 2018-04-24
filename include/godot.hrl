@@ -16,12 +16,15 @@
 -define(VECTOR3, 7:?U_INT).
 -define(MATRIX32, 8:?U_INT).
 -define(PLANE, 9:?U_INT).
--define(QUATERNION, 10:?U_INT).
+-define(QUAT, 10:?U_INT).
 -define(AABB, 11:?U_INT).
--define(MATRIX33, 12:?U_INT).
--define(TRANSFORM, 13:?U_INT).
-
+-define(BASIS, 12:?U_INT).
+-define(TRANSFORM2D, 13:?U_INT).
 -define(COLOR, 14:?U_INT).
+
+
+
+
 -define(NODEPATH, 15:?U_INT).
 -define(RID, 16:?U_INT).
 -define(OBJECT, 17:?U_INT).
@@ -41,4 +44,8 @@
 -record(gd_vector2, { x, y}).
 -record(gd_vector3, { x, y, z}).
 -record(gd_rect2, {x1, y1, x2, y2}).
-
+-record(gd_plane, {x, y, z, d}).
+-record(gd_quat, {x, y, z, w}).
+-record(gd_aabb, {position, size}).
+-record(gd_color, {r, g, b, a}).
+-record(gd_basis, {x_axis, y_axis, z_axis}).

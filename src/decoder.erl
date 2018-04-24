@@ -43,33 +43,34 @@ decode_element(<<?RECT2, X:32/little-float, Y:32/little-float, XS:32/little-floa
 decode_element(<<?VECTOR3, X:32/little-float, Y:32/little-float, Z:32/little-float, D/binary>>) ->
     {#gd_vector3{ x = X, y = Y,z = Z}, D};
 
-decode_element(<<?MATRIX32, ZEROZERO:32/float, ZEROONE:32/float, 
-                    ONEZERO:32/float, ONEONE:32/float, 
-                    TWOZERO:32/float, TWOONE:32/float, D/binary>>) ->
-    {{{ZEROZERO, ZEROONE},{ONEZERO, ONEONE},{TWOZERO, TWOONE}}, D};
+decode_element(<<?BASIS, X1:32/little-float, X2:32/little-float, X3:32/little-float, 
+                         Y1:32/little-float, Y2:32/little-float, Y3:32/little-float, 
+                         Z1:32/little-float, Z2:32/little-float, Z3:32/little-float, D/binary>>) ->
 
-decode_element(<<?PLANE, X:32/float, Y:32/float, Z:32/float, Distance:32/float, D/binary>>) ->
-    {{X,Y,Z,Distance}, D};
+    {#gd_basis{ x_axis = #gd_vector3{x = X1, y = Y1, z = Z1},
+                y_axis = #gd_vector3{x = X2, y = Y2, z = Z2},
+                z_axis = #gd_vector3{x = X3, y = Y3, z = Z3}}, D};
 
-decode_element(<<?QUATERNION, X:32/float, Y:32/float, Z:32/float, R:32/float, D/binary>>) ->
-    {{X,Y,Z,R},D};
+decode_element(<<?PLANE, X:32/little-float, Y:32/little-float, Z:32/little-float, 
+                 Distance:32/little-float, D/binary>>) ->
+    {#gd_plane{x = X, y = Y, z = Z, d = Distance}, D};
 
-decode_element(<<?AABB, X:32/float, Y:32/float, Z:32/float, XS:32/float, YS:32/float, ZS:32/float, D/binary>>) ->
-    {{X,Y,Z,XS,YS,ZS}, D};
+decode_element(<<?QUAT, X:32/little-float, Y:32/little-float, Z:32/little-float, W:32/little-float, D/binary>>) ->
+    {#gd_quat{x = X, y = Y, z = Z, w = W},D};
 
-decode_element(<<?MATRIX33, ZEROZERO:32/float, ZEROONE:32/float, ZEROTWO:32/float,
-                    ONEZERO:32/float, ONEONE:32/float, ONETWO:32/float,
-                    TWOZERO:32/float, TWOONE:32/float, TWOTWO:32/float, D/binary>>) ->
-    {{{ZEROZERO, ZEROONE, ZEROTWO},{ONEZERO, ONEONE, ONETWO},{TWOZERO,TWOONE,TWOTWO}}, D};
+decode_element(<<?AABB, X:32/little-float, Y:32/little-float, Z:32/little-float, 
+                        XS:32/little-float, YS:32/little-float, ZS:32/little-float, D/binary>>) ->
+    {#gd_aabb{position=#gd_vector3{x=X, y=Y, z=Z}, size=#gd_vector3{x=XS, y=YS, z=ZS}}, D};
 
-decode_element(<<?TRANSFORM, ZEROZERO:32/float, ZEROONE:32/float, ZEROTWO:32/float,
+
+decode_element(<<?TRANSFORM2D, ZEROZERO:32/float, ZEROONE:32/float, ZEROTWO:32/float,
                      ONEZERO:32/float, ONEONE:32/float, ONETWO:32/float,
                      TWOZERO:32/float, TWOONE:32/float, TWOTWO:32/float,
                      THREEZERO:32/float, THREEONE:32/float, THREETWO:32/float, D/binary>>) ->
     {{{ZEROZERO, ZEROONE, ZEROTWO},{ONEZERO,ONEONE,ONETWO}, {TWOZERO,TWOONE,TWOTWO}, {THREEZERO,THREEONE, THREETWO}}, D};
 
-decode_element(<<?COLOR, R:4/float-unit:8, G:32/float, B:32/float, A:32/float, D/binary>>) ->
-    {{R,G,B,A}, D};
+decode_element(<<?COLOR, R:32/little-float, G:32/little-float, B:32/little-float, A:32/little-float, D/binary>>) ->
+    {#gd_color{r = R, g = G, b = B, a = A}, D};
 
 decode_element(<<?NODEPATH, L:?S_INT, String/binary>>) ->
     Length = L*8,

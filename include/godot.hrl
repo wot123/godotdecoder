@@ -38,3 +38,7 @@
 -define(VECTOR3ARRAY,27:?U_INT).
 -define(COLORARRAY, 28:?U_INT).
 
+-record(gd_vector2, { x, y}).
+-record(gd_vector3, { x, y, z}).
+-record(gd_rect2, {x1, y1, x2, y2}).
+

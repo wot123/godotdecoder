@@ -35,13 +35,13 @@ decode_element(<<?STRING, L:32/little-integer, S/binary>>) ->
     {binary_to_list(String), D};
 
 decode_element(<<?VECTOR2, X:32/little-float, Y:32/little-float, D/binary>>) ->
-    {{vector2, X, Y}, D};
+    {#gd_vector2{x=X, y=Y}, D};
 
 decode_element(<<?RECT2, X:32/little-float, Y:32/little-float, XS:32/little-float, YS:32/little-float, D/binary>>) ->
-    {{rect2, X, Y, XS, YS}, D};
+    {#gd_rect2{x1 = X, y1 = Y, x2 = XS, y2 = YS}, D};
 
 decode_element(<<?VECTOR3, X:32/little-float, Y:32/little-float, Z:32/little-float, D/binary>>) ->
-    {{vector3, X, Y, Z}, D};
+    {#gd_vector3{ x = X, y = Y,z = Z}, D};
 
 decode_element(<<?MATRIX32, ZEROZERO:32/float, ZEROONE:32/float, 
                     ONEZERO:32/float, ONEONE:32/float, 

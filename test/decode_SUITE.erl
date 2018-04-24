@@ -1,6 +1,7 @@
 -module(decode_SUITE).
 
 -include_lib("common_test/include/ct.hrl").
+-include("include/godot.hrl").
 
 -export([all/0]).
 -export([test_positive_integer/1,
@@ -137,16 +138,16 @@ test_string_null_dict(_) ->
 
 test_vector2(_) ->
     {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/vector2.bin"),
-    [{vector2, 0.0, 1.0}] = decoder:decode(Bin).
+    [#gd_vector2{x = 0.0, y = 1.0}] = decoder:decode(Bin).
 
 test_vector3(_) ->
     {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/vector3.bin"),
-    [{vector3, 0.0, 1.0, 2.0}] = decoder:decode(Bin).
+    [#gd_vector3{ x = 0.0, y = 1.0, z = 2.0}] = decoder:decode(Bin).
 
 test_rect2(_) ->
     {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/rect2.bin"),
-    [{rect2, 0.0, 1.0, 2.0, 3.0}] = decoder:decode(Bin).
+    [#gd_rect2{ x1 = 0.0, y1 = 1.0,x2 = 2.0,y2 = 3.0}] = decoder:decode(Bin).
 
 test_mixed_dict_vector(_) ->
     {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/mixed_dict_vector.bin"),
-    [#{ 1 := {vector2, 0.0, 3.0}, 0.0001 := {vector3, 0.0, 1.0, 2.0}, "test string" := {rect2, 0.0, 0.0, 1.0, 1.0}}] = decoder:decode(Bin).
+    [#{ 1 := #gd_vector2{ x = 0.0,y = 3.0}, 0.0001 := #gd_vector3{ x = 0.0, y = 1.0, z = 2.0}, "test string" := #gd_rect2{x1 = 0.0, y1 = 0.0, x2 = 1.0, y2 = 1.0}}] = decoder:decode(Bin).

@@ -27,8 +27,16 @@ encode_element(L) when is_list(L) ->
     Elements= lists:map( fun(E) -> [encode_element(E)] end, L),
     Length = length(Elements),
     Bin = list_to_binary(Elements),
-    <<?ARRAY, Length:?U_INT, Bin/binary>>.
+    <<?ARRAY, Length:?U_INT, Bin/binary>>;
 
+encode_element(#gd_vector2{x=X, y=Y}) ->
+    <<?VECTOR2, X:32/little-float, Y:32/little-float>>;
+
+encode_element(#gd_vector3{x=X, y=Y, z=Z}) ->
+    <<?VECTOR3, X:32/little-float, Y:32/little-float, Z:32/little-float>>;
+
+encode_element(#gd_rect2{x1 = X, y1 = Y, x2 = X2, y2 = Y2}) ->
+    <<?RECT2, X:32/little-float, Y:32/little-float, X2:32/little-float, Y2:32/little-float>>.
 
 encode_elements([]) ->
     [];

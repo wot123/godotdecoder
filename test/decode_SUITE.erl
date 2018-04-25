@@ -33,7 +33,9 @@
          test_basis/1,
          test_quat/1,
          test_array_vector2/1,
-         test_array_mixed_vector/1]).
+         test_array_mixed_vector/1,
+         test_transform2d/1,
+         test_transform/1]).
 
 all() ->
     [test_positive_integer,
@@ -65,7 +67,9 @@ all() ->
      test_basis,
      test_quat,
      test_array_vector2,
-     test_array_mixed_vector].
+     test_array_mixed_vector,
+     test_transform2d,
+     test_transform].
 
 
 test_positive_integer(_) ->
@@ -195,3 +199,16 @@ test_array_vector2(_) ->
 test_array_mixed_vector(_) ->
     {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/array_mixed_vector.bin"),
     [[#gd_vector2{x = 0.0, y = 1.0}, #gd_vector3{x = 9999.0, y = -120.22200012207031, z = 0.0}, #gd_vector2{x = 0.0, y = -1.0}]] = decoder:decode(Bin).
+
+test_transform2d(_) ->
+    {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/transform2d.bin"),
+    [#gd_transform2d{ x_axis = #gd_vector2{x = 0.0, y = 0.0}, 
+                      y_axis = #gd_vector2{x = 1.0, y = 1.0},
+                      origin = #gd_vector2{x = 2.0, y = 2.0}}] = decoder:decode(Bin).
+
+test_transform(_) ->
+    {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/transform.bin"),
+    [#gd_transform{ basis = #gd_basis{x_axis = #gd_vector3{x = 0.0, y = 0.0, z = 0.0}, 
+                                      y_axis = #gd_vector3{x = 1.0, y = 1.0, z = 1.0},
+                                      z_axis = #gd_vector3{x = 2.0, y = 2.0, z = 2.0}}, 
+                    origin = #gd_vector3{x = 2.0, y = 2.0, z = 5.0}}] = decoder:decode(Bin).

@@ -25,7 +25,9 @@
          test_aabb/1,
          test_plane/1,
          test_quat/1,
-         test_basis/1]).
+         test_basis/1,
+         test_transform2d/1,
+         test_transform/1]).
 
 all() ->
     [test_positive_integer,
@@ -49,7 +51,9 @@ all() ->
      test_aabb,
      test_plane,
      test_quat,
-     test_basis].
+     test_basis,
+     test_transform2d,
+     test_transform].
 
 test_positive_integer(_) ->
     {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/positive_int.bin"),
@@ -186,3 +190,18 @@ test_basis(_) ->
     Bin = encoder:encode([#gd_basis{x_axis = #gd_vector3{x = 1.0, y = 2.0, z = 3.0},
                                     y_axis = #gd_vector3{x = 4.0, y = 5.0, z = 6.0},
                                     z_axis = #gd_vector3{x = 7.0, y = 8.0, z = 9.0}}]).
+
+test_transform2d(_) ->
+    {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/transform2d.bin"),
+    Bin = encoder:encode([#gd_transform2d{ x_axis = #gd_vector2{x = 0.0, y = 0.0},
+                                           y_axis = #gd_vector2{x = 1.0, y = 1.0},
+                                           origin = #gd_vector2{x = 2.0, y = 2.0}}]).
+
+test_transform(_) ->
+    {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/transform.bin"),
+    Bin = encoder:encode([#gd_transform{ 
+                             basis = #gd_basis{ 
+                                        x_axis = #gd_vector3{x = 0.0, y = 0.0, z = 0.0},
+                                        y_axis = #gd_vector3{x = 1.0, y = 1.0, z = 1.0},
+                                        z_axis = #gd_vector3{x = 2.0, y = 2.0, z = 2.0}},
+                             origin = #gd_vector3{x = 2.0, y = 2.0, z = 5.0}}]).

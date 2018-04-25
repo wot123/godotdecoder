@@ -14,12 +14,12 @@
 -define(VECTOR2, 5:?U_INT).
 -define(RECT2, 6:?U_INT).
 -define(VECTOR3, 7:?U_INT).
--define(MATRIX32, 8:?U_INT).
+-define(TRANSFORM2D, 8:?U_INT).
 -define(PLANE, 9:?U_INT).
 -define(QUAT, 10:?U_INT).
 -define(AABB, 11:?U_INT).
 -define(BASIS, 12:?U_INT).
--define(TRANSFORM2D, 13:?U_INT).
+-define(TRANSFORM, 13:?U_INT).
 -define(COLOR, 14:?U_INT).
 
 
@@ -49,3 +49,5 @@
 -record(gd_aabb, {position, size}).
 -record(gd_color, {r, g, b, a}).
 -record(gd_basis, {x_axis, y_axis, z_axis}).
+-record(gd_transform2d, {x_axis, y_axis, origin}).
+-record(gd_transform, { basis , origin}).

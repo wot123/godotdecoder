@@ -63,11 +63,21 @@ decode_element(<<?AABB, X:32/little-float, Y:32/little-float, Z:32/little-float,
     {#gd_aabb{position=#gd_vector3{x=X, y=Y, z=Z}, size=#gd_vector3{x=XS, y=YS, z=ZS}}, D};
 
 
-decode_element(<<?TRANSFORM2D, ZEROZERO:32/float, ZEROONE:32/float, ZEROTWO:32/float,
-                     ONEZERO:32/float, ONEONE:32/float, ONETWO:32/float,
-                     TWOZERO:32/float, TWOONE:32/float, TWOTWO:32/float,
-                     THREEZERO:32/float, THREEONE:32/float, THREETWO:32/float, D/binary>>) ->
-    {{{ZEROZERO, ZEROONE, ZEROTWO},{ONEZERO,ONEONE,ONETWO}, {TWOZERO,TWOONE,TWOTWO}, {THREEZERO,THREEONE, THREETWO}}, D};
+decode_element(<<?TRANSFORM2D, X1:32/little-float, Y1:32/little-float, 
+                               X2:32/little-float, Y2:32/little-float, 
+                               X3:32/little-float, Y3:32/little-float,D/binary>>) ->
+    {#gd_transform2d{ x_axis = #gd_vector2{x = X1, y = Y1},
+                      y_axis = #gd_vector2{x = X2, y = Y2},
+                      origin = #gd_vector2{x = X3, y = Y3}}, D};
+
+decode_element(<<?TRANSFORM, X1:32/little-float, X2:32/little-float, X3:32/little-float,
+                             Y1:32/little-float, Y2:32/little-float, Y3:32/little-float,
+                             Z1:32/little-float, Z2:32/little-float, Z3:32/little-float,
+                             X4:32/little-float, Y4:32/little-float, Z4:32/little-float, D/binary>>) ->
+    {#gd_transform{ basis = #gd_basis{ x_axis = #gd_vector3{x = X1, y = Y1, z = Z1},
+                                       y_axis = #gd_vector3{x = X2, y = Y2, z = Z2},
+                                       z_axis = #gd_vector3{x = X3, y = Y3, z = Z3}},
+                    origin = #gd_vector3{x = X4, y = Y4, z = Z4}}, D};
 
 decode_element(<<?COLOR, R:32/little-float, G:32/little-float, B:32/little-float, A:32/little-float, D/binary>>) ->
     {#gd_color{r = R, g = G, b = B, a = A}, D};

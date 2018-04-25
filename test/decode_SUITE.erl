@@ -31,7 +31,9 @@
          test_aabb/1,
          test_plane/1,
          test_basis/1,
-         test_quat/1]).
+         test_quat/1,
+         test_array_vector2/1,
+         test_array_mixed_vector/1]).
 
 all() ->
     [test_positive_integer,
@@ -61,7 +63,9 @@ all() ->
      test_aabb,
      test_plane,
      test_basis,
-     test_quat].
+     test_quat,
+     test_array_vector2,
+     test_array_mixed_vector].
 
 
 test_positive_integer(_) ->
@@ -184,3 +188,10 @@ test_quat(_) ->
     {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/quat.bin"),
     [#gd_quat{ x = 0.0, y = 1.0, z = 2.0, w=3.0}] = decoder:decode(Bin).
 
+test_array_vector2(_) ->
+    {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/array_vector2.bin"),
+    [[#gd_vector2{x = 0.0, y = 1.0}, #gd_vector2{x = 9999.0, y = -120.22200012207031}, #gd_vector2{x = 0.0, y = -1.0}]] = decoder:decode(Bin).
+
+test_array_mixed_vector(_) ->
+    {ok, Bin} = file:read_file(code:priv_dir(godotdecoder) ++ "/gdscript_bin/array_mixed_vector.bin"),
+    [[#gd_vector2{x = 0.0, y = 1.0}, #gd_vector3{x = 9999.0, y = -120.22200012207031, z = 0.0}, #gd_vector2{x = 0.0, y = -1.0}]] = decoder:decode(Bin).

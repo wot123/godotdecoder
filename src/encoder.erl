@@ -58,7 +58,24 @@ encode_element(#gd_basis{ x_axis = #gd_vector3{x = X1, y = Y1, z = Z1},
                           z_axis = #gd_vector3{x = X3, y = Y3, z= Z3}}) ->
     <<?BASIS, X1:32/little-float, X2:32/little-float, X3:32/little-float,
               Y1:32/little-float, Y2:32/little-float, Y3:32/little-float,
-              Z1:32/little-float, Z2:32/little-float, Z3:32/little-float>>.
+              Z1:32/little-float, Z2:32/little-float, Z3:32/little-float>>;
+
+encode_element(#gd_transform2d{ x_axis = #gd_vector2{ x = X1, y = Y1},
+                                y_axis = #gd_vector2{ x = X2, y = Y2},
+                                origin = #gd_vector2{ x = X3, y = Y3}}) ->
+    <<?TRANSFORM2D, X1:32/little-float, Y1:32/little-float,
+                    X2:32/little-float, Y2:32/little-float,
+                    X3:32/little-float, Y3:32/little-float>>;
+
+encode_element(#gd_transform{ 
+                  basis = #gd_basis{ x_axis = #gd_vector3{x = X1, y = Y1, z = Z1},
+                                     y_axis = #gd_vector3{x = X2, y = Y2, z = Z2},
+                                     z_axis = #gd_vector3{x = X3, y = Y3, z = Z3}},
+                  origin = #gd_vector3{x = X4, y = Y4, z = Z4}}) ->
+    <<?TRANSFORM, X1:32/little-float, X2:32/little-float, X3:32/little-float,
+                  Y1:32/little-float, Y2:32/little-float, Y3:32/little-float,
+                  Z1:32/little-float, Z2:32/little-float, Z3:32/little-float,
+                  X4:32/little-float, Y4:32/little-float, Z4:32/little-float>>.
 
 
 encode_elements([]) ->

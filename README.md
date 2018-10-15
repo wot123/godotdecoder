@@ -2,6 +2,7 @@ godotdecoder
 =====
 [![CircleCI](https://circleci.com/gh/wot123/godotdecoder.svg?style=svg)](https://circleci.com/gh/wot123/godotdecoder)
 
+Tested with Godot version 3.0.6
 
 Godot v3 binary format decoder and encoder for Erlang
   

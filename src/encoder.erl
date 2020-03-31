@@ -5,7 +5,7 @@
 
 
 encode_element(I) when is_integer(I) ->
-    <<?INTEGER64, I:8/little-signed-integer-unit:8>>;
+    <<?INTEGER, I:8/little-signed-integer-unit:4>>;
 
 encode_element(F) when is_float(F) ->
     <<?FLOAT64, F:64/little-float>>;

@@ -1,16 +1,6 @@
 {application, godotdecoder,
- [{description, "An OTP application"},
+ [{description, "Godot encoder/decoder library"},
   {vsn, "0.1.0"},
-  {registered, []},
-  {mod, { godotdecoder_app, []}},
-  {applications,
-   [kernel,
-    stdlib
-   ]},
-  {env,[]},
-  {modules, []},
-
-  {maintainers, []},
   {licenses, ["Apache 2.0"]},
   {links, []}
  ]}.
